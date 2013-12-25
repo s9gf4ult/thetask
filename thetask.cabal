@@ -24,6 +24,7 @@ library
                  --    Handler.Home
                      Handler.Users
                      Handler.User
+                     Handler.Groups
                      Forms.User
 
     if flag(dev) || flag(library-only)
