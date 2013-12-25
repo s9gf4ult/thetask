@@ -1,6 +1,6 @@
 User
     email Text
-    password Text Maybe
+    password Text
     UniqueUserEmail email
     deriving Typeable
 

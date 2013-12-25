@@ -5,3 +5,4 @@
 
 -- / HomeR GET POST
 /users/*CollectionAction UsersR GET POST
+/user/#UserId/*MemberAction UserR GET DELETE POST

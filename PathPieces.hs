@@ -15,3 +15,16 @@ instance PathMultiPiece CollectionAction where
 
   toPathMultiPiece EmptyColAction = []
   toPathMultiPiece NewColAction = ["new"]
+
+
+data MemberAction = EmptyMembAction
+                  | EditMembAction
+                    deriving (Typeable, Show, Eq, Read)
+
+instance PathMultiPiece MemberAction where
+  fromPathMultiPiece [] = Just EmptyMembAction
+  fromPathMultiPiece ["edit"] = Just EditMembAction
+  fromPathMultiPiece _ = Nothing
+
+  toPathMultiPiece EmptyMembAction = []
+  toPathMultiPiece EditMembAction = ["edit"]

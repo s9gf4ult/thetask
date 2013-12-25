@@ -23,6 +23,8 @@ library
                      Settings.Development
                  --    Handler.Home
                      Handler.Users
+                     Handler.User
+                     Forms.User
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

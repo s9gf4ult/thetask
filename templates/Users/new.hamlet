@@ -1,0 +1,11 @@
+<h1> new user
+
+<ul>
+  $forall fail <- fails
+     <li> #{fail}
+
+<form method=post action=@{UsersR EmptyColAction} enctype=enctype>
+  ^{widget}
+  <button> Submit
+
+<a href=@{UsersR EmptyColAction}> Back
