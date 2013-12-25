@@ -14,12 +14,15 @@ Flag library-only
 library
     exposed-modules: Application
                      Foundation
+                     Fields
                      Import
                      Model
+                     PathPieces
                      Settings
                      Settings.StaticFiles
                      Settings.Development
-                     Handler.Home
+                 --    Handler.Home
+                     Handler.Users
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

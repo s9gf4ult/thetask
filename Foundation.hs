@@ -1,24 +1,24 @@
 module Foundation where
 
+import Database.Persist.Sql (SqlPersistT)
+import Model
+import Network.HTTP.Conduit (Manager)
+import PathPieces
 import Prelude
+import Settings (widgetFile, Extra (..))
+import Settings.Development (development)
+import Settings.StaticFiles
+import Text.Hamlet (hamletFile)
+import Text.Jasmine (minifym)
 import Yesod
-import Yesod.Static
 import Yesod.Auth
-import Yesod.Auth.BrowserId
-import Yesod.Auth.GoogleEmail
+import Yesod.Auth.Email
+import Yesod.Core.Types (Logger)
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
-import Network.HTTP.Conduit (Manager)
-import qualified Settings
-import Settings.Development (development)
+import Yesod.Static
 import qualified Database.Persist
-import Database.Persist.Sql (SqlPersistT)
-import Settings.StaticFiles
-import Settings (widgetFile, Extra (..))
-import Model
-import Text.Jasmine (minifym)
-import Text.Hamlet (hamletFile)
-import Yesod.Core.Types (Logger)
+import qualified Settings
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -83,7 +83,8 @@ instance Yesod App where
     urlRenderOverride _ _ = Nothing
 
     -- The page to be redirected to when authentication is required.
-    authRoute _ = Just $ AuthR LoginR
+    -- authRoute _ = Just $ AuthR LoginR
+    authRoute = const Nothing
 
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
@@ -114,25 +115,26 @@ instance YesodPersist App where
 instance YesodPersistRunner App where
     getDBRunner = defaultGetDBRunner connPool
 
-instance YesodAuth App where
-    type AuthId App = UserId
+-- instance YesodAuth App where
+--     type AuthId App = UserId
 
-    -- Where to send a user after successful login
-    loginDest _ = HomeR
-    -- Where to send a user after logout
-    logoutDest _ = HomeR
+--     -- Where to send a user after successful login
+--     loginDest _ = HomeR
+--     -- Where to send a user after logout
+--     logoutDest _ = HomeR
 
-    getAuthId creds = runDB $ do
-        x <- getBy $ UniqueUser $ credsIdent creds
-        case x of
-            Just (Entity uid _) -> return $ Just uid
-            Nothing -> do
-                fmap Just $ insert $ User (credsIdent creds) Nothing
+--     getAuthId creds = runDB $ do
+--       x <- getBy $ UniqueUserEmail $ credsIdent creds
+--       case x of
+--         Just (Entity uid _) -> return $ Just uid
+--         Nothing -> return Nothing
 
-    -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authBrowserId def, authGoogleEmail]
+--     -- You can add other plugins like BrowserID, email or OAuth here
+--     authPlugins _ = [authEmail]
 
-    authHttpManager = httpManager
+--     authHttpManager = httpManager
+
+
 
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.
