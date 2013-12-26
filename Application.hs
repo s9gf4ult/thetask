@@ -31,6 +31,7 @@ import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
 import Handler.Users
 import Handler.User
 import Handler.Groups
+import Handler.Group
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

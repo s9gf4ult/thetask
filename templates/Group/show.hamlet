@@ -1,0 +1,4 @@
+<h1> Group #{groupName group}
+
+<a href=@{GroupR gid EditMembAction}> Edit
+<a href=@{GroupsR EmptyColAction}> List

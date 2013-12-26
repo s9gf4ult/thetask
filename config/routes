@@ -7,3 +7,4 @@
 /users/*CollectionAction UsersR GET POST
 /user/#UserId/*MemberAction UserR GET DELETE POST
 /groups/*CollectionAction GroupsR GET POST
+/group/#GroupId/*MemberAction GroupR GET POST DELETE

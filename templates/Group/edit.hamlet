@@ -1,0 +1,11 @@
+<h1> edit #{groupName group}
+
+<ul>
+  $forall fail <- fails
+    <li>#{fail}
+
+<form method=post action=@{GroupR gid EmptyMembAction} enctype=entype>
+  ^{widget}
+  <button> Update
+
+<a href=@{GroupR gid EmptyMembAction}> show

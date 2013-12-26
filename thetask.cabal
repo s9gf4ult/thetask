@@ -25,7 +25,9 @@ library
                      Handler.Users
                      Handler.User
                      Handler.Groups
+                     Handler.Group
                      Forms.User
+                     Forms.Group
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
