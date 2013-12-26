@@ -5,10 +5,20 @@ module Handler.Group where
 
 import Import
 import Forms.Group
+import qualified Database.Esqueleto as E
 
 getGroupR :: GroupId -> MemberAction -> Handler Html
 getGroupR gid EmptyMembAction = do
   group <- runDB $ get404 gid
+  users <- runDB
+           $ E.select
+           $ E.from $ \(user `E.InnerJoin` userGroup `E.InnerJoin` group) -> do
+             E.on (user E.^. UserId E.==. userGroup E.^. UserGroupUserId)
+             E.on (userGroup E.^. UserGroupGroupId E.==. group E.^. GroupId)
+             E.where_ (group E.^. GroupId E.==. (E.val gid))
+             E.orderBy [E.asc (user E.^. UserEmail)]
+             return (user, userGroup)
+
   defaultLayout $(widgetFile "Group/show")
 getGroupR gid EditMembAction = do
   group <- runDB $ get404 gid

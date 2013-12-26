@@ -2,3 +2,8 @@
 
 <a href=@{GroupR gid EditMembAction}> Edit
 <a href=@{GroupsR EmptyColAction}> List
+
+<h2> Users
+<ul>
+  $forall ((Entity uid user), (Entity ugid _)) <- users
+     <li> #{userEmail user}
