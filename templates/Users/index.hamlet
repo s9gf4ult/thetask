@@ -2,7 +2,7 @@
 <ul>
   $forall (Entity uid user) <- users
     <li>
-       <a href=@{UserR uid EmptyMembAction}>
+       <a href=@{UserR uid empty}>
          #{userEmail user}
 
-<a href=@{UsersR NewColAction}> New User
+<a href=@{UsersR new}> New User

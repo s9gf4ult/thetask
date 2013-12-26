@@ -1,0 +1,8 @@
+<h1> Attach user to group #{groupName group}
+
+<ul>
+$forall (widget, enctype, user) <- widgets
+  <li>
+     user #{userEmail user}
+     <form method=post action=@{UserGroupsR} enctype=#{enctype}>
+        <button>Attach

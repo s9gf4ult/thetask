@@ -6,17 +6,18 @@ module Handler.Users where
 import Import
 import Forms.User
 
-getUsersR :: CollectionAction -> Handler Html
-getUsersR EmptyColAction = do
+getUsersR :: [Text] -> Handler Html
+getUsersR [] = do
   users <- runDB $ selectList [] []
   defaultLayout $(widgetFile "Users/index")
-getUsersR NewColAction = do
+getUsersR ["new"] = do
   (widget, enctype) <- generateFormPost $ userForm Nothing
   let fails :: [Text] = []
   defaultLayout $(widgetFile "Users/new")
+getUsersR x = notFound
 
-postUsersR :: CollectionAction -> Handler Html
-postUsersR EmptyColAction = do
+postUsersR :: [Text] -> Handler Html
+postUsersR [] = do
   ((res, widget), enctype) <- runFormPost (userForm Nothing)
   case res of
     FormSuccess user -> do
@@ -27,7 +28,7 @@ postUsersR EmptyColAction = do
           defaultLayout $(widgetFile "Users/new")
         Nothing -> do
           uid <- runDB $ insert user
-          redirect $ UserR uid EmptyMembAction
+          redirect $ UserR uid [""]
 
     FormFailure fails -> defaultLayout $(widgetFile "Users/new")
 postUsersR _ = notFound

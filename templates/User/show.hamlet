@@ -1,4 +1,4 @@
 <h1> User #{userEmail user}
 
-<a href=@{UserR uid EditMembAction}> Edit
-<a href=@{UsersR EmptyColAction}> Back to list
+<a href=@{UserR uid edit}> Edit
+<a href=@{UsersR empty}> Back to list

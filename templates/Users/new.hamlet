@@ -2,10 +2,10 @@
 
 <ul>
   $forall fail <- fails
-     <li> #{fail}
+    <li> #{fail}
 
-<form method=post action=@{UsersR EmptyColAction} enctype=enctype>
+<form method=post action=@{UsersR empty} enctype=#{enctype}>
   ^{widget}
   <button> Submit
 
-<a href=@{UsersR EmptyColAction}> Back
+<a href=@{UsersR empty}> Back

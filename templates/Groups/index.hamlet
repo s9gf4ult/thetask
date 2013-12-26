@@ -3,6 +3,6 @@
 <ul>
 $forall (Entity gid group) <- groups
   <li>
-    <a href=@{GroupR gid EmptyMembAction}> #{groupName group}
+    <a href=@{GroupR gid empty}> #{groupName group}
 
-<a href=@{GroupsR NewColAction}> New group
+<a href=@{GroupsR new}> New group

@@ -1,7 +1,7 @@
 <h1> Group #{groupName group}
 
-<a href=@{GroupR gid EditMembAction}> Edit
-<a href=@{GroupsR EmptyColAction}> List
+<a href=@{GroupR gid edit}> Edit
+<a href=@{GroupsR empty}> List
 
 <h2> Users
 <ul>

@@ -5,10 +5,12 @@ module Handler.Group where
 
 import Import
 import Forms.Group
+import Forms.UserGroup
+import Control.Monad (forM)
 import qualified Database.Esqueleto as E
 
-getGroupR :: GroupId -> MemberAction -> Handler Html
-getGroupR gid EmptyMembAction = do
+getGroupR :: GroupId -> [Text] -> Handler Html
+getGroupR gid [] = do
   group <- runDB $ get404 gid
   users <- runDB
            $ E.select
@@ -20,14 +22,28 @@ getGroupR gid EmptyMembAction = do
              return (user, userGroup)
 
   defaultLayout $(widgetFile "Group/show")
-getGroupR gid EditMembAction = do
+getGroupR gid ["edit"] = do
   group <- runDB $ get404 gid
   (widget, enctype) <- generateFormPost $ groupForm $ Just group
   let fails :: [Text] = []
   defaultLayout $(widgetFile "Group/edit")
+getGroupR gid ["attach_user"] = do
+  group <- runDB $ get404 gid
+  users <- runDB
+           $ E.select
+           $ E.from $ \user -> do
+             E.where_ $ E.notExists $ E.select $ E.from $ \userGroup -> do
+               E.where_ $ (userGroup E.^. UserGroupGroupId E.==. (E.val gid)) E.&&. (userGroup E.^. UserGroupUserId E.==. user E.^. UserId)
+             return user
+  widgets <- forM users $ \(Entity uid user) -> do
+    (widget, enctype) <- generateFormPost $ userGroupCreateForm uid gid
+    return (widget, enctype, user)
+  defaultLayout $(widgetFile "Group/attach_user")
 
-postGroupR :: GroupId -> MemberAction -> Handler Html
-postGroupR gid EmptyMembAction = do
+
+
+postGroupR :: GroupId -> [Text] -> Handler Html
+postGroupR gid [] = do
   g <- runDB $ get404 gid
   ((res, widget), enctype) <- runFormPost $ groupForm Nothing
   case res of
@@ -37,16 +53,14 @@ postGroupR gid EmptyMembAction = do
       case oldg of
         Nothing -> do
           runDB $ update gid [Update GroupName gname Assign]
-          redirect $ GroupR gid EmptyMembAction
+          redirect $ GroupR gid [""]
         Just _ -> do
           let fails :: [Text] = ["There is already group with such name"]
           defaultLayout $(widgetFile "Group/edit")
     FormFailure fails -> do
       let group = g
       defaultLayout $(widgetFile "Group/edit")
-
-
 postGroupR _ _ = notFound
 
-deleteGroupR :: GroupId -> MemberAction -> Handler Html
+deleteGroupR :: GroupId -> [Text] -> Handler Html
 deleteGroupR = error "Not yet implemented: deleteGroupR"

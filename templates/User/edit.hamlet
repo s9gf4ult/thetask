@@ -4,8 +4,8 @@
   $forall fail <- fails
     <li>#{fail}
 
-<form method=post action=@{UserR uid EmptyMembAction} enctype=#{enctype}>
+<form method=post action=@{UserR uid empty} enctype=#{enctype}>
   ^{widget}
   <button>Update
 
-<a href=@{UserR uid EmptyMembAction}>Show
+<a href=@{UserR uid empty}>Show

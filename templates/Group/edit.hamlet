@@ -4,8 +4,8 @@
   $forall fail <- fails
     <li>#{fail}
 
-<form method=post action=@{GroupR gid EmptyMembAction} enctype=entype>
+<form method=post action=@{GroupR gid empty} enctype=entype>
   ^{widget}
   <button> Update
 
-<a href=@{GroupR gid EmptyMembAction}> show
+<a href=@{GroupR gid empty}> show

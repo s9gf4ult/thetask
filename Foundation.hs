@@ -2,6 +2,7 @@ module Foundation where
 
 import Database.Persist.Sql (SqlPersistT)
 import Model
+import Data.Text (Text)
 import Network.HTTP.Conduit (Manager)
 import PathPieces
 import Prelude
@@ -19,6 +20,10 @@ import Yesod.Default.Util (addStaticContentExternal)
 import Yesod.Static
 import qualified Database.Persist
 import qualified Settings
+
+empty = []
+new = ["new"]
+edit = ["edit"]
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application

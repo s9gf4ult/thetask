@@ -13,21 +13,22 @@ Flag library-only
 
 library
     exposed-modules: Application
-                     Foundation
                      Fields
+                     Forms.Group
+                     Forms.User
+                     Forms.UserGroup
+                     Foundation
+                     Handler.Group
+                     Handler.Groups
+                     Handler.User
+                     Handler.Users
                      Import
                      Model
                      PathPieces
                      Settings
-                     Settings.StaticFiles
                      Settings.Development
+                     Settings.StaticFiles
                  --    Handler.Home
-                     Handler.Users
-                     Handler.User
-                     Handler.Groups
-                     Handler.Group
-                     Forms.User
-                     Forms.Group
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
