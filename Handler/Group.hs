@@ -32,13 +32,16 @@ getGroupR gid ["attach_user"] = do
   users <- runDB
            $ E.select
            $ E.from $ \user -> do
-             E.where_ $ E.notExists $ E.select $ E.from $ \userGroup -> do
-               E.where_ $ (userGroup E.^. UserGroupGroupId E.==. (E.val gid)) E.&&. (userGroup E.^. UserGroupUserId E.==. user E.^. UserId)
+             E.where_ $ E.notExists $ do
+               E.from $ \userGroup -> do
+                 E.where_ $ (userGroup E.^. UserGroupGroupId E.==. (E.val gid)) E.&&. (userGroup E.^. UserGroupUserId E.==. user E.^. UserId)
+               return ()
              return user
   widgets <- forM users $ \(Entity uid user) -> do
     (widget, enctype) <- generateFormPost $ userGroupCreateForm uid gid
     return (widget, enctype, user)
   defaultLayout $(widgetFile "Group/attach_user")
+getGroupR _ _ = notFound
 
 
 
