@@ -21,9 +21,12 @@ import Yesod.Static
 import qualified Database.Persist
 import qualified Settings
 
-empty = []
+empty = []                      -- this is for hamlet templates, I could not use
+                                -- list constructors inside hamlet's @{}
+                                -- expressions
 new = ["new"]
 edit = ["edit"]
+attach_user = ["attach_user"]
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application

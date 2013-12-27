@@ -38,7 +38,7 @@ getGroupR gid ["attach_user"] = do
                return ()
              return user
   widgets <- forM users $ \(Entity uid user) -> do
-    (widget, enctype) <- generateFormPost $ userGroupCreateForm uid gid
+    (widget, enctype) <- generateFormPost $ userGroupCreateForm (Just uid) (Just gid)
     return (widget, enctype, user)
   defaultLayout $(widgetFile "Group/attach_user")
 getGroupR _ _ = notFound

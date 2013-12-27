@@ -7,3 +7,5 @@
 <ul>
   $forall ((Entity uid user), (Entity ugid _)) <- users
      <li> #{userEmail user}
+
+<a href=@{GroupR gid attach_user}> Attach user
