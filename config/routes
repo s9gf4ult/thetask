@@ -9,3 +9,4 @@
 /groups/*[Text] GroupsR GET POST
 /group/#GroupId/*[Text] GroupR GET POST DELETE
 /user_groups/*[Text] UserGroupsR POST
+/user_group/#UserGroupId UserGroupR DELETE

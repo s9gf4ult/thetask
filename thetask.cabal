@@ -23,6 +23,7 @@ library
                      Handler.User
                      Handler.Users
                      Handler.UserGroups
+                     Handler.UserGroup
                      Import
                      Model
                      PathPieces

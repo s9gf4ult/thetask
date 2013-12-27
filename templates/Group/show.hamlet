@@ -5,7 +5,9 @@
 
 <h2> Users
 <ul>
-  $forall ((Entity uid user), (Entity ugid _)) <- users
+  $forall ((Entity _ user), (Entity ugid _)) <- users
      <li> #{userEmail user}
+        <form method=delete action=@{UserGroupR ugid}>
+           <button>Detach
 
 <a href=@{GroupR gid attach_user}> Attach user
