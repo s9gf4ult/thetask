@@ -27,6 +27,7 @@ empty = []                      -- this is for hamlet templates, I could not use
 new = ["new"]
 edit = ["edit"]
 attach_user = ["attach_user"]
+adelete = ["delete"]
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application

@@ -2,9 +2,10 @@ module Handler.UserGroup where
 
 import Import
 
-deleteUserGroupR :: UserGroupId -> Handler Html
-deleteUserGroupR ugid = do
+postUserGroupR :: UserGroupId -> [Text] -> Handler Html
+postUserGroupR ugid ["delete"] = do
   userGroup <- runDB $ get404 ugid
   let gid = userGroupGroupId userGroup
-  runDB $ deleteWhere [UserGroupId ==. ugid]
+  runDB $ delete ugid
   redirect $ GroupR gid []
+postUserGroupR _ _ = notFound
