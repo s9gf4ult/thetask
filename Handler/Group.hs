@@ -56,7 +56,7 @@ postGroupR gid [] = do
       case oldg of
         Nothing -> do
           runDB $ update gid [Update GroupName gname Assign]
-          redirect $ GroupR gid [""]
+          redirect $ GroupR gid []
         Just _ -> do
           let fails :: [Text] = ["There is already group with such name"]
           defaultLayout $(widgetFile "Group/edit")

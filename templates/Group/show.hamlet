@@ -6,8 +6,18 @@
 <h2> Users
 <ul>
   $forall ((Entity _ user), (Entity ugid _)) <- users
-     <li> #{userEmail user}
-        <form method=post action=@{UserGroupR ugid adelete}>
-           <button>Detach
+    <li> #{userEmail user}
+      <form method=post action=@{UserGroupR ugid adelete}>
+        <button>Detach
 
 <a href=@{GroupR gid attach_user}> Attach user
+
+<h2> Permissions
+
+$# <ul>
+$#   $forall (Entity gpid gpermission) <- permissions
+$#     <li> #{groupPermissionValue gpermission}
+$#       <form method=post action=@{GroupPermissionR gpid ["delete"]}>
+$#         <button>Disallow
+
+$# <a href=@{GroupR gid ["new_permission"]}>Grant permission

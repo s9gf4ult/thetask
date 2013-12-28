@@ -5,10 +5,15 @@ module Handler.User where
 
 import Import
 import Forms.User
+import qualified Database.Esqueleto as E
 
 getUserR :: UserId -> [Text] -> Handler Html
 getUserR uid [] = do
   user <- runDB $ get404 uid
+  groups <- runDB $ E.select $ E.from $ \(group `E.InnerJoin` userGroup) -> do
+    E.on (userGroup E.^. UserGroupGroupId E.==. group E.^. GroupId)
+    E.where_ (userGroup E.^. UserGroupUserId E.==. (E.val uid))
+    return (userGroup, group)
   defaultLayout $(widgetFile "User/show")
 
 getUserR uid ["edit"] = do
@@ -33,7 +38,7 @@ postUserR uid [] = do
           defaultLayout $(widgetFile "User/edit")
         Nothing -> do
           runDB $ update uid [Update UserEmail (userEmail user) Assign]
-          redirect $ UserR uid [""]
+          redirect $ UserR uid []
     FormFailure fails -> do
       user <- runDB $ get404 uid
       defaultLayout $(widgetFile "User/edit")

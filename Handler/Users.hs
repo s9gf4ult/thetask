@@ -28,7 +28,7 @@ postUsersR [] = do
           defaultLayout $(widgetFile "Users/new")
         Nothing -> do
           uid <- runDB $ insert user
-          redirect $ UserR uid [""]
+          redirect $ UserR uid []
 
     FormFailure fails -> defaultLayout $(widgetFile "Users/new")
 postUsersR _ = notFound
