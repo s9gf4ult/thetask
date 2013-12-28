@@ -1,0 +1,10 @@
+<h1> add permission to
+  <a href=@{GroupR gid empty}>#{groupName group}
+
+<ul>
+  $forall fail <- fails
+    <li> #{fail}
+
+<form method=post action=@{GroupPermissionsR empty} enctype=#{enctype}>
+  ^{widget}
+  <button>Grant

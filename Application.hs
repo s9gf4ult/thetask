@@ -35,6 +35,8 @@ import Handler.Group
 import Handler.Groups
 import Handler.UserGroups
 import Handler.UserGroup
+import Handler.GroupPermission
+import Handler.GroupPermissions
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

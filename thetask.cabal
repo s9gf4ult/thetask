@@ -15,15 +15,18 @@ library
     exposed-modules: Application
                      Fields
                      Forms.Group
+                     Forms.GroupPermission
                      Forms.User
                      Forms.UserGroup
                      Foundation
                      Handler.Group
+                     Handler.GroupPermission
                      Handler.Groups
                      Handler.User
-                     Handler.Users
-                     Handler.UserGroups
                      Handler.UserGroup
+                     Handler.UserGroups
+                     Handler.Users
+                     Handler.GroupPermissions
                      Import
                      Model
                      PathPieces
@@ -54,6 +57,7 @@ library
 
     build-depends: base                          >= 4          && < 5
                  , aeson
+                 , blaze-markup
                  , bytestring                    >= 0.9        && < 0.11
                  , conduit                       >= 1.0
                  , data-default
@@ -81,8 +85,8 @@ library
                  , yesod-auth                    >= 1.2        && < 1.3
                  , yesod-core                    >= 1.2        && < 1.3
                  , yesod-form                    >= 1.3        && < 1.4
-                 , yesod-static                  >= 1.2        && < 1.3
                  , yesod-persistent              >= 1.2        && < 1.3
+                 , yesod-static                  >= 1.2        && < 1.3
 
 executable         thetask
     if flag(library-only)

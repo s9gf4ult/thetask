@@ -1,5 +1,7 @@
 module Fields where
 
+import Text.Blaze
+import Text.Blaze.Internal
 import Data.Monoid ((<>))
 import Data.Text (pack, unpack)
 import Data.Typeable
@@ -20,3 +22,7 @@ instance PersistField PermissionValues where
 
 instance PersistFieldSql  PermissionValues where
   sqlType _ = SqlString
+
+instance ToMarkup PermissionValues where
+  toMarkup PVAdmin = text "Admin rights"
+  toMarkup PVDelegateAdmin = text "Delegate admin rights"

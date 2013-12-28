@@ -6,6 +6,7 @@ module Handler.Group where
 import Import
 import Forms.Group
 import Forms.UserGroup
+import Forms.GroupPermission
 import Control.Monad (forM)
 import qualified Database.Esqueleto as E
 
@@ -20,7 +21,7 @@ getGroupR gid [] = do
              E.where_ (group E.^. GroupId E.==. (E.val gid))
              E.orderBy [E.asc (user E.^. UserEmail)]
              return (user, userGroup)
-
+  permissions <- runDB $ selectList [GroupPermissionGroupId ==. gid] []
   defaultLayout $(widgetFile "Group/show")
 getGroupR gid ["edit"] = do
   group <- runDB $ get404 gid
@@ -41,6 +42,11 @@ getGroupR gid ["attach_user"] = do
     (widget, enctype) <- generateFormPost $ userGroupCreateForm (Just uid) (Just gid)
     return (widget, enctype, user)
   defaultLayout $(widgetFile "Group/attach_user")
+getGroupR gid ["new_permission"] = do
+  group <- runDB $ get404 gid
+  (widget, enctype) <- generateFormPost $ newGroupPermission $ Just gid
+  let fails :: [Text] = []
+  defaultLayout $(widgetFile "Group/new_permission")
 getGroupR _ _ = notFound
 
 

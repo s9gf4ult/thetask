@@ -10,3 +10,5 @@
 /group/#GroupId/*[Text] GroupR GET POST DELETE
 /user_groups/*[Text] UserGroupsR POST
 /user_group/#UserGroupId/*[Text] UserGroupR POST
+/group_permission/#GroupPermissionId/*[Text] GroupPermissionR POST
+/group_permissions/*[Text] GroupPermissionsR POST

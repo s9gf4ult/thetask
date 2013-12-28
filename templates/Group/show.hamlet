@@ -14,10 +14,10 @@
 
 <h2> Permissions
 
-$# <ul>
-$#   $forall (Entity gpid gpermission) <- permissions
-$#     <li> #{groupPermissionValue gpermission}
-$#       <form method=post action=@{GroupPermissionR gpid ["delete"]}>
-$#         <button>Disallow
+<ul>
+  $forall (Entity gpid gpermission) <- permissions
+    <li> #{groupPermissionValue gpermission}
+      <form method=post action=@{GroupPermissionR gpid ["delete"]}>
+        <button>Disallow
 
-$# <a href=@{GroupR gid ["new_permission"]}>Grant permission
+<a href=@{GroupR gid ["new_permission"]}>Grant permission
