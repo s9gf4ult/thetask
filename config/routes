@@ -4,8 +4,8 @@
 /robots.txt RobotsR GET
 
 -- / HomeR GET POST
-/users/*[Text] UsersR GET POST
-/user/#UserId/*[Text] UserR GET DELETE POST
+/users/*UserPieces UsersR GET POST
+
 /groups/*[Text] GroupsR GET POST
 /group/#GroupId/*[Text] GroupR GET POST DELETE
 /user_groups/*[Text] UserGroupsR POST

@@ -6,6 +6,9 @@ module Handler.GroupPermissions where
 
 import Import
 import Forms.GroupPermission
+import qualified Database.Persist     as P
+import qualified Yesod.Persist        as P
+
 
 postGroupPermissionsR :: [Text] -> Handler Html
 postGroupPermissionsR [] = do
@@ -14,14 +17,14 @@ postGroupPermissionsR [] = do
     FormSuccess perm -> do
       let gid = groupPermissionGroupId perm
           pval = groupPermissionValue perm
-      oldperm <- runDB $ getBy $ UniqueGroupPermission gid pval
+      oldperm <- runDB $ P.getBy $ UniqueGroupPermission gid pval
       case oldperm of
         Nothing -> do
-          runDB $ insert $ GroupPermission gid pval
+          runDB $ P.insert $ GroupPermission gid pval
           redirect $ GroupR gid []
         Just _ -> do
           let fails :: [Text] = ["This permission already granted"]
-          group <- runDB $ get404 gid
+          group <- runDB $ P.get404 gid
           defaultLayout $(widgetFile "Group/new_permission")
     _ -> redirect $ GroupsR []
 postGroupPermissionsR _ = notFound

@@ -22,7 +22,6 @@ library
                      Handler.Group
                      Handler.GroupPermission
                      Handler.Groups
-                     Handler.User
                      Handler.UserGroup
                      Handler.UserGroups
                      Handler.Users

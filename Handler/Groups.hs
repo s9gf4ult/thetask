@@ -6,10 +6,13 @@ module Handler.Groups where
 
 import Import
 import Forms.Group
+import qualified Database.Persist     as P
+import qualified Yesod.Persist        as P
+
 
 getGroupsR :: [Text] -> Handler Html
 getGroupsR [] = do
-  groups <- runDB $ selectList [] []
+  groups <- runDB $ P.selectList [] []
   defaultLayout $(widgetFile "Groups/index")
 getGroupsR ["new"] = do
   (widget, enctype) <- generateFormPost $ groupForm Nothing
@@ -21,10 +24,10 @@ postGroupsR [] = do
   ((res, widget), enctype) <- runFormPost $ groupForm Nothing
   case res of
     FormSuccess group -> do
-      oldg <- runDB $ getBy $ UniqueGroup $ groupName group
+      oldg <- runDB $ P.getBy $ UniqueGroup $ groupName group
       case oldg of
         Nothing -> do
-          gid <- runDB $ insert group
+          gid <- runDB $ P.insert group
           redirect $ GroupR gid []
         Just g -> do
           let fails :: [Text] = ["There is one group with such name"]

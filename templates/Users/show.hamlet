@@ -1,12 +1,12 @@
 <h1> User #{userEmail user}
 
-<a href=@{UserR uid edit}> Edit
-<a href=@{UsersR empty}> Back to list
+<a href=@{UsersR $ MPiece uid MEdit}> Edit
+<a href=@{UsersR $ CPiece CEmpty}> Back to list
 
 <h2> Groups
 
 <ul>
-  $forall (Entity ugid _, Entity _ group) <- groups
+  $forall (P.Entity ugid _, P.Entity _ group) <- groups
     <li> group #{groupName group}
       <form method=post action=@{UserGroupR ugid ["delete"]}>
         <button>Detach

@@ -1,0 +1,11 @@
+<h1> Edit user #{userEmail user}
+
+<ul>
+  $forall fail <- fails
+    <li>#{fail}
+
+<form method=post action=@{UsersR $ MPiece uid MEmpty} enctype=#{enctype}>
+  ^{widget}
+  <button>Update
+
+<a href=@{UsersR $ MPiece uid MEmpty}>Show

@@ -1,7 +1,7 @@
 <h1> Groups index
 
 <ul>
-$forall (Entity gid group) <- groups
+$forall (P.Entity gid group) <- groups
   <li>
     <a href=@{GroupR gid empty}> #{groupName group}
 

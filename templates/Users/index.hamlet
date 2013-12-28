@@ -1,8 +1,8 @@
 <h1> All users list
 <ul>
-  $forall (Entity uid user) <- users
+  $forall (P.Entity uid user) <- users
     <li>
-       <a href=@{UserR uid empty}>
+       <a href=@{UsersR $ MPiece uid MEmpty}>
          #{userEmail user}
 
-<a href=@{UsersR new}> New User
+<a href=@{UsersR $ CPiece CNew}> New User
