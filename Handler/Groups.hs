@@ -35,12 +35,12 @@ getGroupsR (MPiece gid (MGroupStd MEmpty)) = do
              orderBy [asc (user ^. UserEmail)]
              return (user, userGroup)
   permissions <- runDB $ P.selectList [GroupPermissionGroupId P.==. gid] []
-  defaultLayout $(widgetFile "Group/show")
+  defaultLayout $(widgetFile "Groups/show")
 getGroupsR (MPiece gid (MGroupStd MEdit)) = do
   group <- runDB $ P.get404 gid
   (widget, enctype) <- generateFormPost $ groupForm $ Just group
   let fails :: [Text] = []
-  defaultLayout $(widgetFile "Group/edit")
+  defaultLayout $(widgetFile "Groups/edit")
 getGroupsR (MPiece gid MGroupAttachUser) = do
   group <- runDB $ P.get404 gid
   users <- runDB
@@ -54,12 +54,12 @@ getGroupsR (MPiece gid MGroupAttachUser) = do
   widgets <- forM users $ \(Entity uid user) -> do
     (widget, enctype) <- generateFormPost $ userGroupCreateForm (Just uid) (Just gid)
     return (widget, enctype, user)
-  defaultLayout $(widgetFile "Group/attach_user")
+  defaultLayout $(widgetFile "Groups/attach_user")
 getGroupsR (MPiece gid MGroupNewPermission) = do
   group <- runDB $ P.get404 gid
   (widget, enctype) <- generateFormPost $ newGroupPermission $ Just gid
   let fails :: [Text] = []
-  defaultLayout $(widgetFile "Group/new_permission")
+  defaultLayout $(widgetFile "Groups/new_permission")
 getGroupsR _ = notFound
 
 
@@ -90,8 +90,8 @@ postGroupsR (MPiece gid (MGroupStd MEmpty)) = do
           redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
         Just _ -> do
           let fails :: [Text] = ["There is already group with such name"]
-          defaultLayout $(widgetFile "Group/edit")
+          defaultLayout $(widgetFile "Groups/edit")
     FormFailure fails -> do
       let group = g
-      defaultLayout $(widgetFile "Group/edit")
+      defaultLayout $(widgetFile "Groups/edit")
 postGroupsR _ = notFound

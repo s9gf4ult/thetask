@@ -17,7 +17,7 @@
 <ul>
   $forall (P.Entity gpid gpermission) <- permissions
     <li> #{groupPermissionValue gpermission}
-      <form method=post action=@{GroupPermissionR gpid ["delete"]}>
+      <form method=post action=@{GroupPermissionsR $ MPiece gpid MDelete}>
         <button>Disallow
 
 <a href=@{GroupsR $ MPiece gid $ MGroupNewPermission}>Grant permission

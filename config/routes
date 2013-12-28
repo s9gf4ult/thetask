@@ -10,5 +10,4 @@
 
 /user_groups/*UserGroupPieces UserGroupsR POST
 
-/group_permission/#GroupPermissionId/*[Text] GroupPermissionR POST
-/group_permissions/*[Text] GroupPermissionsR POST
+/group_permissions/*GroupPermissionPieces GroupPermissionsR POST

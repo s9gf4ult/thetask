@@ -19,9 +19,7 @@ library
                      Forms.User
                      Forms.UserGroup
                      Foundation
-                     Handler.GroupPermission
                      Handler.Groups
-                     Handler.UserGroup
                      Handler.UserGroups
                      Handler.Users
                      Handler.GroupPermissions

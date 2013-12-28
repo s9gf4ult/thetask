@@ -5,6 +5,6 @@
   $forall fail <- fails
     <li> #{fail}
 
-<form method=post action=@{GroupPermissionsR empty} enctype=#{enctype}>
+<form method=post action=@{GroupPermissionsR $ CPiece CEmpty} enctype=#{enctype}>
   ^{widget}
   <button>Grant

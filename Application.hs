@@ -28,10 +28,8 @@ import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 -- import Handler.Home
-import Handler.GroupPermission
 import Handler.GroupPermissions
 import Handler.Groups
-import Handler.UserGroup
 import Handler.UserGroups
 import Handler.Users
 
