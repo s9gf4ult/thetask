@@ -66,3 +66,4 @@ instance PathMultiPiece MGroupAction where
 
 type UserPieces = Piece UserId MAction CAction
 type GroupPieces = Piece GroupId MGroupAction CAction
+type UserGroupPieces = Piece UserGroupId MAction CAction

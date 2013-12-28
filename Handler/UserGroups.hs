@@ -9,8 +9,8 @@ import Forms.UserGroup
 import qualified Database.Persist as P
 import qualified Yesod.Persist    as P
 
-postUserGroupsR :: [Text] -> Handler Html
-postUserGroupsR [] = do
+postUserGroupsR :: UserGroupPieces -> Handler Html
+postUserGroupsR (CPiece CEmpty) = do
   ((res, _), _) <- runFormPost $ userGroupCreateForm Nothing Nothing
   case res of
     FormSuccess usergroup -> do
@@ -25,7 +25,12 @@ postUserGroupsR [] = do
           redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
         Just _ -> do
           redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
-    FormFailure fails -> do
+    _ -> do
       redirect $ GroupsR $ CPiece CEmpty
 
+postUserGroupsR (MPiece ugid MDelete) = do
+  userGroup <- runDB $ P.get404 ugid
+  let gid = userGroupGroupId userGroup
+  runDB $ P.delete ugid
+  redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
 postUserGroupsR _ = notFound

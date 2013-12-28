@@ -7,7 +7,7 @@
 <ul>
   $forall ((P.Entity _ user), (P.Entity ugid _)) <- users
     <li> #{userEmail user}
-      <form method=post action=@{UserGroupR ugid adelete}>
+      <form method=post action=@{UserGroupsR $ MPiece ugid MDelete}>
         <button>Detach
 
 <a href=@{GroupsR $ MPiece gid $ MGroupAttachUser}> Attach user

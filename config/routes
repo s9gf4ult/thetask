@@ -8,7 +8,7 @@
 
 /groups/*GroupPieces GroupsR GET POST
 
-/user_groups/*[Text] UserGroupsR POST
-/user_group/#UserGroupId/*[Text] UserGroupR POST
+/user_groups/*UserGroupPieces UserGroupsR POST
+
 /group_permission/#GroupPermissionId/*[Text] GroupPermissionR POST
 /group_permissions/*[Text] GroupPermissionsR POST
