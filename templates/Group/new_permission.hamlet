@@ -1,5 +1,5 @@
 <h1> add permission to
-  <a href=@{GroupR gid empty}>#{groupName group}
+  <a href=@{GroupsR $ MPiece gid $ MGroupStd MEmpty}>#{groupName group}
 
 <ul>
   $forall fail <- fails

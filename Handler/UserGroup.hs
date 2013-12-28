@@ -10,5 +10,5 @@ postUserGroupR ugid ["delete"] = do
   userGroup <- runDB $ P.get404 ugid
   let gid = userGroupGroupId userGroup
   runDB $ P.delete ugid
-  redirect $ GroupR gid []
+  redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
 postUserGroupR _ _ = notFound

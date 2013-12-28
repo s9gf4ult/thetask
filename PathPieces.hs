@@ -65,3 +65,4 @@ instance PathMultiPiece MGroupAction where
   toPathMultiPiece MGroupAttachUser = ["attach_user"]
 
 type UserPieces = Piece UserId MAction CAction
+type GroupPieces = Piece GroupId MGroupAction CAction

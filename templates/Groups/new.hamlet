@@ -4,6 +4,6 @@
   $forall fail <- fails
      <li>#{fail}
 
-<form method=post action=@{GroupsR empty} enctype=#{enctype}>
+<form method=post action=@{GroupsR $ CPiece CEmpty} enctype=#{enctype}>
   ^{widget}
   <button> Create

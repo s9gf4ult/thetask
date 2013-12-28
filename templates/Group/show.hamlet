@@ -1,7 +1,7 @@
 <h1> Group #{groupName group}
 
-<a href=@{GroupR gid edit}> Edit
-<a href=@{GroupsR empty}> List
+<a href=@{GroupsR $ MPiece gid $ MGroupStd MEdit}> Edit
+<a href=@{GroupsR $ CPiece CEmpty}> List
 
 <h2> Users
 <ul>
@@ -10,7 +10,7 @@
       <form method=post action=@{UserGroupR ugid adelete}>
         <button>Detach
 
-<a href=@{GroupR gid attach_user}> Attach user
+<a href=@{GroupsR $ MPiece gid $ MGroupAttachUser}> Attach user
 
 <h2> Permissions
 
@@ -20,4 +20,4 @@
       <form method=post action=@{GroupPermissionR gpid ["delete"]}>
         <button>Disallow
 
-<a href=@{GroupR gid ["new_permission"]}>Grant permission
+<a href=@{GroupsR $ MPiece gid $ MGroupNewPermission}>Grant permission

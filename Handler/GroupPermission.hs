@@ -10,5 +10,5 @@ postGroupPermissionR gpid ["delete"] = do
   gperm <- runDB $ P.get404 gpid
   let gid = groupPermissionGroupId gperm
   runDB $ P.delete gpid
-  redirect $ GroupR gid []
+  redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
 postGroupPermissionR _ _ = notFound

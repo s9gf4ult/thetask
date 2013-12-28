@@ -21,10 +21,10 @@ postGroupPermissionsR [] = do
       case oldperm of
         Nothing -> do
           runDB $ P.insert $ GroupPermission gid pval
-          redirect $ GroupR gid []
+          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
         Just _ -> do
           let fails :: [Text] = ["This permission already granted"]
           group <- runDB $ P.get404 gid
           defaultLayout $(widgetFile "Group/new_permission")
-    _ -> redirect $ GroupsR []
+    _ -> redirect $ GroupsR $ CPiece CEmpty
 postGroupPermissionsR _ = notFound

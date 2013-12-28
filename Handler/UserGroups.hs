@@ -22,10 +22,10 @@ postUserGroupsR [] = do
       case oldug of
         Nothing -> do
           runDB $ P.insert usergroup
-          redirect $ GroupR gid []
+          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
         Just _ -> do
-          redirect $ GroupR gid []
+          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
     FormFailure fails -> do
-      redirect $ GroupsR []
+      redirect $ GroupsR $ CPiece CEmpty
 
 postUserGroupsR _ = notFound

@@ -6,8 +6,8 @@
 -- / HomeR GET POST
 /users/*UserPieces UsersR GET POST
 
-/groups/*[Text] GroupsR GET POST
-/group/#GroupId/*[Text] GroupR GET POST DELETE
+/groups/*GroupPieces GroupsR GET POST
+
 /user_groups/*[Text] UserGroupsR POST
 /user_group/#UserGroupId/*[Text] UserGroupR POST
 /group_permission/#GroupPermissionId/*[Text] GroupPermissionR POST
