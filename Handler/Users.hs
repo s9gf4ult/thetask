@@ -3,6 +3,7 @@
   #-}
 module Handler.Users where
 
+import Yesod.Auth.HashDB (setPassword)
 import Database.Esqueleto
 import Forms.User
 import Import
@@ -28,8 +29,9 @@ getUsersR (MPiece uid MEmpty) = do
 
 getUsersR (MPiece uid MEdit) = do
   user <- runDB $ P.get404 uid
-  let fails :: [Text] = []
-  (widget, enctype) <- generateFormPost $ userForm $ Just user
+  let fails = [] :: [Text]
+  (ewidget, eenctype) <- generateFormPost $ editUserForm user
+  (pwidget, penctype) <- generateFormPost $ changePasswordForm
   defaultLayout $(widgetFile "Users/edit")
 
 getUsersR _ = notFound
@@ -39,23 +41,26 @@ postUsersR :: UserPieces -> Handler Html
 postUsersR (CPiece CEmpty) = do
   ((res, widget), enctype) <- runFormPost (userForm Nothing)
   case res of
-    FormSuccess user -> do
-      suser <- runDB $ getBy $ UniqueUserEmail $ userEmail user
+    FormSuccess (email, pass) -> do
+      user <- setPassword pass $ User email "" ""
+      suser <- runDB $ insertBy user
       case suser of
-        Just _ -> do
+        Left _ -> do
           let fails :: [Text] = ["There is already one user with such email"]
           defaultLayout $(widgetFile "Users/new")
-        Nothing -> do
-          uid <- runDB $ insert user
-          redirect $ UsersR $ MPiece uid MEmpty
+        Right uid -> redirect $ UsersR $ MPiece uid MEmpty
 
     FormFailure fails -> defaultLayout $(widgetFile "Users/new")
+    FormMissing -> redirect $ UsersR $ CPiece CEmpty
 
 postUsersR (MPiece uid MEmpty) = do
-  ((res, widget), enctype) <- runFormPost $ userForm Nothing
+  ((res, widget), enctype) <- runFormPost changePasswordForm
   case res of
-    FormSuccess user -> do
-      suser <- runDB $ P.getBy $ UniqueUserEmail $ userEmail user
+    FormSuccess (newp, oldp) -> do
+      user <- runDB $ get404 uid
+      -- we are admin and so, we do not check old password
+      nuser <- setPassword newp user
+
       case suser of
         Just _ -> do
           let fails :: [Text] = ["There is already user with such email"]

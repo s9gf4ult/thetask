@@ -20,6 +20,7 @@ library
                      Forms.UserGroup
                      Foundation
                      Handler.Groups
+                     Handler.Home
                      Handler.UserGroups
                      Handler.Users
                      Handler.GroupPermissions

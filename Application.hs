@@ -30,6 +30,7 @@ import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
 -- import Handler.Home
 import Handler.GroupPermissions
 import Handler.Groups
+import Handler.Home
 import Handler.UserGroups
 import Handler.Users
 

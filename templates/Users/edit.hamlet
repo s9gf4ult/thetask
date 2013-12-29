@@ -4,8 +4,14 @@
   $forall fail <- fails
     <li>#{fail}
 
-<form method=post action=@{UsersR $ MPiece uid MEmpty} enctype=#{enctype}>
-  ^{widget}
-  <button>Update
+<h2> Edit user
+<form method=post action=@{UsersR $ MPiece uid MEdit} enctype=#{eenctype}>
+  ^{ewidget}
+  <button> Update
+
+<h2> Change password
+<form method=post action=@{UsersR $ MPiece uid MEmpty} enctype=#{penctype}>
+  ^{pwidget}
+  <button> Change
 
 <a href=@{UsersR $ MPiece uid MEmpty}>Show

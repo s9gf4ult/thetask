@@ -13,7 +13,7 @@ import Text.Hamlet (hamletFile)
 import Text.Jasmine (minifym)
 import Yesod
 import Yesod.Auth
-import Yesod.Auth.Email
+import Yesod.Auth.HashDB (HashDBUser(..), getAuthIdHashDB, authHashDB)
 import Yesod.Core.Types (Logger)
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
@@ -84,8 +84,8 @@ instance Yesod App where
     urlRenderOverride _ _ = Nothing
 
     -- The page to be redirected to when authentication is required.
-    -- authRoute _ = Just $ AuthR LoginR
-    authRoute = const Nothing
+    authRoute _ = Just $ AuthR LoginR
+    -- authRoute = const Nothing
 
     -- This function creates static content files in the static folder
     -- and names them based on a hash of their content. This allows
@@ -116,24 +116,26 @@ instance YesodPersist App where
 instance YesodPersistRunner App where
     getDBRunner = defaultGetDBRunner connPool
 
--- instance YesodAuth App where
---     type AuthId App = UserId
+instance YesodAuth App where
+    type AuthId App = UserId
 
---     -- Where to send a user after successful login
---     loginDest _ = HomeR
---     -- Where to send a user after logout
---     logoutDest _ = HomeR
+    -- Where to send a user after successful login
+    loginDest _ = HomeR
+    -- Where to send a user after logout
+    logoutDest _ = HomeR
 
---     getAuthId creds = runDB $ do
---       x <- getBy $ UniqueUserEmail $ credsIdent creds
---       case x of
---         Just (Entity uid _) -> return $ Just uid
---         Nothing -> return Nothing
+    getAuthId = getAuthIdHashDB AuthR  (Just . UniqueUserEmail)
 
---     -- You can add other plugins like BrowserID, email or OAuth here
---     authPlugins _ = [authEmail]
+    -- You can add other plugins like BrowserID, email or OAuth here
+    authPlugins _ = [authHashDB (Just . UniqueUserEmail)]
 
---     authHttpManager = httpManager
+    authHttpManager = httpManager
+
+instance  HashDBUser User where
+  userPasswordHash = Just . userPassword
+  userPasswordSalt = Just . userSalt
+  setSaltAndPasswordHash salt ps user = user {userPassword = ps,
+                                              userSalt = salt}
 
 
 

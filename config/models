@@ -1,6 +1,7 @@
 User
     email Text
     password Text
+    salt Text
     UniqueUserEmail email
     deriving Typeable
 
