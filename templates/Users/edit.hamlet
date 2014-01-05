@@ -5,13 +5,13 @@
     <li>#{fail}
 
 <h2> Edit user
-<form method=post action=@{UsersR $ MPiece uid MEdit} enctype=#{eenctype}>
+<form method=post action=@{UserEditR uid} enctype=#{eenctype}>
   ^{ewidget}
   <button> Update
 
 <h2> Change password
-<form method=post action=@{UsersR $ MPiece uid MEmpty} enctype=#{penctype}>
+<form method=post action=@{UserChpasswdR uid} enctype=#{penctype}>
   ^{pwidget}
   <button> Change
 
-<a href=@{UsersR $ MPiece uid MEmpty}>Show
+<a href=@{UserR uid}>Show

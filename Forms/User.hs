@@ -19,10 +19,10 @@ userForm mu h = do
 
 
 editUserForm :: User -> Form [P.Update User]
-editUserForm user = renderDivs $ upd <$> aopt emailField "Change email" (Just $ userEmail user)
+editUserForm user = renderDivs $ upd <$> areq emailField "Change email" (Just $ userEmail user)
   where
-    upd (Just email) = [P.Update UserEmail email P.Assign]
-    upd Nothing = []
+    upd email = [P.Update UserEmail email P.Assign]
+    -- upd Nothing = []
 
 changePasswordForm :: Form (Text, Text) -- ^ new password, old password
 changePasswordForm h = do
@@ -36,5 +36,5 @@ changePasswordForm h = do
                                                         then FormSuccess (p1, oldp)
                                                         else FormFailure ["Old password is just same as new"]
                                            | otherwise = FormFailure ["You must input password correctly twice"]
-    checkPass FormFailure f = FormFailure f
+    checkPass (FormFailure f) = FormFailure f
     checkPass FormMissing = FormMissing

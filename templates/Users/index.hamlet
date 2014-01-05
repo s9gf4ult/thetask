@@ -2,7 +2,7 @@
 <ul>
   $forall (P.Entity uid user) <- users
     <li>
-       <a href=@{UsersR $ MPiece uid MEmpty}>
+       <a href=@{UserR uid}>
          #{userEmail user}
 
-<a href=@{UsersR $ CPiece CNew}> New User
+<a href=@{UsersNewR}> New User

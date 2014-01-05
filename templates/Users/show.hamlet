@@ -1,7 +1,7 @@
 <h1> User #{userEmail user}
 
-<a href=@{UsersR $ MPiece uid MEdit}> Edit
-<a href=@{UsersR $ CPiece CEmpty}> Back to list
+<a href=@{UserEditR uid}> Edit
+<a href=@{UsersR}> Back to list
 
 <h2> Groups
 

@@ -5,7 +5,13 @@
 /robots.txt RobotsR GET
 
 / HomeR GET
-/users/*UserPieces UsersR GET POST
+
+/users UsersR GET
+/users/new UsersNewR GET POST
+/user/#UserId UserR GET
+/user/#UserId/edit UserEditR GET POST
+/user/#UserId/chpasswd UserChpasswdR POST
+
 
 /groups/*GroupPieces GroupsR GET POST
 
