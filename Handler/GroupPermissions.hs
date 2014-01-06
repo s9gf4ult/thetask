@@ -4,8 +4,9 @@
 
 module Handler.GroupPermissions where
 
-import Import
 import Forms.GroupPermission
+import Handler.Groups  (_getGroupNewPermissionR)
+import Import
 import qualified Database.Persist     as P
 import qualified Yesod.Persist        as P
 
@@ -20,16 +21,14 @@ postGroupPermissionsR (CPiece CEmpty) = do
       oldperm <- runDB $ P.getBy $ UniqueGroupPermission gid pval
       case oldperm of
         Nothing -> do
-          _ <- runDB $ P.insert $ GroupPermission gid pval
-          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
+          runDB $ P.insert_ $ GroupPermission gid pval
+          redirect $ GroupR gid
         Just _ -> do
-          let fails :: [Text] = ["This permission already granted"]
-          group <- runDB $ P.get404 gid
-          defaultLayout $(widgetFile "Groups/new_permission")
-    _ -> redirect $ GroupsR $ CPiece CEmpty
+          _getGroupNewPermissionR ["This permission already granted"] gid
+    _ -> redirect $ GroupsR
 postGroupPermissionsR (MPiece gpid MDelete) = do
   gperm <- runDB $ P.get404 gpid
   let gid = groupPermissionGroupId gperm
   runDB $ P.delete gpid
-  redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
+  redirect $ GroupR gid
 postGroupPermissionsR _ = notFound

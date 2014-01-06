@@ -22,15 +22,15 @@ postUserGroupsR (CPiece CEmpty) = do
       case oldug of
         Nothing -> do
           runDB $ P.insert usergroup
-          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
+          redirect $ GroupR gid
         Just _ -> do
-          redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
+          redirect $ GroupR gid
     _ -> do
-      redirect $ GroupsR $ CPiece CEmpty
+      redirect $ GroupsR
 
 postUserGroupsR (MPiece ugid MDelete) = do
   userGroup <- runDB $ P.get404 ugid
   let gid = userGroupGroupId userGroup
   runDB $ P.delete ugid
-  redirect $ GroupsR $ MPiece gid $ MGroupStd MEmpty
+  redirect $ GroupR gid
 postUserGroupsR _ = notFound

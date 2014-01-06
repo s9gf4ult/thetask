@@ -35,7 +35,7 @@ postUsersNewR = do
         Right uid -> redirect $ UserR uid
 
     FormFailure fails -> defaultLayout $(widgetFile "Users/new")
-    FormMissing -> redirect UsersR
+    _ -> redirect UsersR
 
 getUserR :: UserId -> Handler Html
 getUserR uid = do

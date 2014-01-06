@@ -3,6 +3,6 @@
 <ul>
 $forall (P.Entity gid group) <- groups
   <li>
-    <a href=@{GroupsR $ MPiece gid $ MGroupStd MEmpty}> #{groupName group}
+    <a href=@{GroupR gid}> #{groupName group}
 
-<a href=@{GroupsR $ CPiece CNew}> New group
+<a href=@{GroupsNewR}> New group

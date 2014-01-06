@@ -12,8 +12,12 @@
 /user/#UserId/edit UserEditR GET POST
 /user/#UserId/chpasswd UserChpasswdR POST
 
-
-/groups/*GroupPieces GroupsR GET POST
+/groups GroupsR GET
+/groups/new GroupsNewR GET POST
+/group/#GroupId GroupR GET
+/group/#GroupId/edit GroupEditR GET POST
+/group/#GroupId/attach_user GroupAttachUserR GET
+/group/#GroupId/new_permission GroupNewPermissionR GET
 
 /user_groups/*UserGroupPieces UserGroupsR POST
 
