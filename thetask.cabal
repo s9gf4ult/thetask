@@ -26,7 +26,6 @@ library
                      Handler.GroupPermissions
                      Import
                      Model
-                     PathPieces
                      Settings
                      Settings.Development
                      Settings.StaticFiles

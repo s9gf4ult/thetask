@@ -4,7 +4,6 @@ import Database.Persist.Sql (SqlPersistT)
 import Model
 import Data.Text (Text)
 import Network.HTTP.Conduit (Manager)
-import PathPieces
 import Prelude
 import Settings (widgetFile, Extra (..))
 import Settings.Development (development)

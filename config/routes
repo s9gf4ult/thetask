@@ -22,7 +22,5 @@
 /user_groups/new UserGroupsNewR POST
 /user_group/#UserGroupId/delete UserGroupDeleteR POST
 
--- /group_permissions/*GroupPermissionPieces GroupPermissionsR POST
-
 /group_permissions/new GroupPermissionsNewR POST
 /group_permission/#GroupPermissionId/delete GroupPermissionDeleteR POST
