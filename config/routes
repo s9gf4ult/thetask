@@ -19,6 +19,7 @@
 /group/#GroupId/attach_user GroupAttachUserR GET
 /group/#GroupId/new_permission GroupNewPermissionR GET
 
-/user_groups/*UserGroupPieces UserGroupsR POST
+/user_groups/new UserGroupsNewR POST
+/user_group/#UserGroupId/delete UserGroupDeleteR POST
 
 /group_permissions/*GroupPermissionPieces GroupPermissionsR POST

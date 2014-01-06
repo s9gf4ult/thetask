@@ -4,6 +4,6 @@
 $forall (widget, enctype, user) <- widgets
   <li>
      user #{userEmail user}
-     <form method=post action=@{UserGroupsR $ CPiece CEmpty} enctype=#{enctype}>
+     <form method=post action=@{UserGroupsNewR} enctype=#{enctype}>
         ^{widget}
         <button>Attach

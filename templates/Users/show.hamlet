@@ -8,5 +8,5 @@
 <ul>
   $forall (P.Entity ugid _, P.Entity _ group) <- groups
     <li> group #{groupName group}
-      <form method=post action=@{UserGroupsR $ MPiece ugid MDelete}>
+      <form method=post action=@{UserGroupDeleteR ugid}>
         <button>Detach
