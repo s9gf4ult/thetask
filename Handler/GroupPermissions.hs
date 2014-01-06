@@ -10,9 +10,8 @@ import Import
 import qualified Database.Persist     as P
 import qualified Yesod.Persist        as P
 
-
-postGroupPermissionsR :: GroupPermissionPieces -> Handler Html
-postGroupPermissionsR (CPiece CEmpty) = do
+postGroupPermissionsNewR :: Handler Html
+postGroupPermissionsNewR = do
   ((res, widget), enctype) <- runFormPost $ newGroupPermission Nothing
   case res of
     FormSuccess perm -> do
@@ -26,9 +25,10 @@ postGroupPermissionsR (CPiece CEmpty) = do
         Just _ -> do
           _getGroupNewPermissionR ["This permission already granted"] gid
     _ -> redirect $ GroupsR
-postGroupPermissionsR (MPiece gpid MDelete) = do
+
+postGroupPermissionDeleteR :: GroupPermissionId -> Handler Html
+postGroupPermissionDeleteR gpid = do
   gperm <- runDB $ P.get404 gpid
   let gid = groupPermissionGroupId gperm
   runDB $ P.delete gpid
   redirect $ GroupR gid
-postGroupPermissionsR _ = notFound
