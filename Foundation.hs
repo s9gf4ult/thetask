@@ -2,6 +2,8 @@ module Foundation where
 
 import Database.Persist.Sql (SqlPersistT)
 import Model
+import Fields
+import Models.User
 import Data.Text (Text)
 import Network.HTTP.Conduit (Manager)
 import Prelude
@@ -17,6 +19,7 @@ import Yesod.Core.Types (Logger)
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Yesod.Static
+import qualified Data.Set as S
 import qualified Database.Persist
 import qualified Settings
 
@@ -78,9 +81,21 @@ instance Yesod App where
 
     -- This is done to provide an optimization for serving static files from
     -- a separate domain. Please see the staticRoot setting in Settings.hs
-    urlRenderOverride y (StaticR s) =
-        Just $ uncurry (joinPath y (Settings.staticRoot $ settings y)) $ renderRoute s
+    urlRenderOverride y (StaticR s) = Just $ uncurry (joinPath y (Settings.staticRoot $ settings y)) $ renderRoute s
     urlRenderOverride _ _ = Nothing
+
+    isAuthorized r wr = do
+      p <- needPermissions r wr
+      muid <- maybeAuthId
+      case muid of
+        Nothing -> if S.null p
+                   then return Authorized
+                   else return AuthenticationRequired
+        Just uid -> do
+          up <- userPermissions uid
+          if S.isSubsetOf p up
+            then return Authorized
+            else return $ Unauthorized "You have no permissions to perform this operation"
 
     -- The page to be redirected to when authentication is required.
     authRoute _ = Just $ AuthR LoginR
@@ -153,3 +168,27 @@ getExtra = fmap (appExtra . settings) getYesod
 -- wiki:
 --
 -- https://github.com/yesodweb/yesod/wiki/Sending-email
+
+
+needPermissions :: Route App -> Bool -> Handler (S.Set PermissionValues)
+needPermissions UsersNewR _ = _needAdmin
+needPermissions (UserR _) _ = _needAdmin
+needPermissions (UserEditR _) _ = _needAdmin
+needPermissions (UserChpasswdR _) _ = _needAdmin
+
+needPermissions GroupsR _ = _needAdmin
+needPermissions (GroupR _) _ = _needAdmin
+needPermissions (GroupEditR _) _ = _needAdmin
+needPermissions (GroupAttachUserR _) _ = _needAdmin
+needPermissions (GroupNewPermissionR _) _ = _needAdmin
+
+needPermissions UserGroupsNewR _ = _needAdmin
+needPermissions (UserGroupDeleteR _) _ = _needAdmin
+
+needPermissions GroupPermissionsNewR _ = _needAdmin
+needPermissions (GroupPermissionDeleteR _) _ = _needAdmin
+
+needPermissions _ _ = return S.empty
+
+_needAdmin :: Handler (S.Set PermissionValues)
+_needAdmin = return $ S.singleton PVAdmin

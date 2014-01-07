@@ -3,7 +3,7 @@ module Fields where
 import Control.Applicative ((<|>), (*>))
 import Data.Attoparsec.Text
 import Data.Monoid ((<>))
-import Data.Text (pack, unpack, Text)
+import Data.Text (Text)
 import Data.Typeable
 import Database.Persist
 import Database.Persist.Sql
@@ -18,7 +18,7 @@ data PermissionValues = PVAdmin -- Permit manage groups and permissions
                       | PVReserveRooms
                       | PVReadFinance Text
                       | PVUnknown
-                      deriving (Typeable, Show, Read, Eq)
+                      deriving (Typeable, Show, Read, Eq, Ord)
 
 instance ToMarkup PermissionValues where
   toMarkup PVAdmin = text "Admin rights"
@@ -54,18 +54,21 @@ permissionParser = (string "admin" *> return PVAdmin)
                    <|> (string "reserve rooms" *> return PVReserveRooms)
                    <|> readFinance
 
+readEmailParser :: Parser PermissionValues
 readEmailParser = do
   _ <- string "read email"
   skipSpace
   e <- takeText
   return $ PVReadEmail e
 
+writeEmailParser :: Parser PermissionValues
 writeEmailParser = do
   _ <- string "write email"
   skipSpace
   e <- takeText
   return $ PVWriteEmail e
 
+readFinance :: Parser PermissionValues
 readFinance = do
   _ <- string "read finance"
   skipSpace
